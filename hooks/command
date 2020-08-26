@@ -16,15 +16,14 @@ function cleanup {
 trap cleanup EXIT
 
 function skaffold_install {
-  skaffold_path="${HOME}/bin/skaffold.${install_version}"
+  skaffold="${HOME}/bin/skaffold.${install_version}"
   [[ ! -d "${HOME}/bin" ]] && mkdir ${HOME}/bin
-  if [[ ! -x "${skaffold_path}" ]]
+  if [[ ! -x "${skaffold}" ]]
   then
     echo "install skaffold version ${install_version}"
-    curl -fLo ${skaffold_path} \
+    curl -fLo ${skaffold} \
     https://storage.googleapis.com/skaffold/releases/${install_version}/skaffold-linux-amd64 \
-    && chmod +x ${skaffold_path}
-    skaffold="${skaffold_path}"
+    && chmod +x ${skaffold}
     echo -n "installed skaffold version: "
   else
     echo -n "existing skaffold version: "
