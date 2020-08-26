@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  tests:
+    image: buildkite/plugin-tester:latest
+    volumes:
+      - ".:/plugin:ro"
+  lint:
+    image: buildkite/plugin-linter
+    command: ['--id', 'pr8kerl/skaffold']
+    volumes:
+      - ".:/plugin:ro"

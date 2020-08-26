@@ -1,0 +1,20 @@
+name: Skaffold
+description: Run skaffold within a buildkite step
+author: https://github.com/pr8kerl
+requirements:
+  - curl
+configuration:
+  properties:
+    install:
+      type: string
+    version:
+      type: string
+    debug:
+      type: string
+    command:
+      type: string
+    profile:
+      type: string
+  required:
+    - command
+  additionalProperties: false
