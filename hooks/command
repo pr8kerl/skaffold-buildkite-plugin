@@ -6,7 +6,9 @@ return_code=1
 debug_mode=1
 install_mode=1
 install_version="${BUILDKITE_PLUGIN_SKAFFOLD_VERSION:-latest}"
+kinstall_version="${BUILDKITE_PLUGIN_KUBECTL_VERSION:-1.17.9}"
 skaffold="skaffold" # assume it is in the path by default
+kubectl="kubectl" # assume it is in the path by default
 skaffold_args=""
 build_artifact="skaffold-images.json"
 
@@ -17,6 +19,7 @@ trap cleanup EXIT
 
 function skaffold_install {
   skaffold="${HOME}/bin/skaffold.${install_version}"
+  kubectl="${HOME}/bin/kubectl.${kinstall_version}"
   [[ ! -d "${HOME}/bin" ]] && mkdir ${HOME}/bin
   if [[ ! -x "${skaffold}" ]]
   then
@@ -27,6 +30,15 @@ function skaffold_install {
     echo -n "installed skaffold version: "
   else
     echo -n "existing skaffold version: "
+  fi
+  if [[ ! -x "${kubectl}" ]]
+  then
+    echo "install kubectl version ${kinstall_version}"
+    curl -fLo ${kubectl} https://amazon-eks.s3.ap-southeast-2.amazonaws.com/${kinstall_version}/2020-08-04/bin/linux/amd64/kubectl \
+    && chmod u+x ${kubectl}
+    echo -n "installed kubectl version: ${kinstall_version}"
+  else
+    echo -n "existing kubectl version: ${kinstall_version}"
   fi
   echo $(${skaffold} version)
 }
