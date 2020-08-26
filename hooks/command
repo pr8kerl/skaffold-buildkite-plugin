@@ -39,7 +39,7 @@ function skaffold_build {
 }
 
 function skaffold_deploy {
-  buildkite-agent artifact download ${build_artifact}
+  buildkite-agent artifact download ${build_artifact} .
   echo build artifact:
   cat ${build_artifact}
   ${skaffold} deploy --build-artifacts=${build_artifact} ${skaffold_args}
